@@ -1,6 +1,7 @@
 package com.example.nwsl_zone.matches;
 
 import com.example.nwsl_zone.player.PlayerRepository;
+import com.example.nwsl_zone.teams.TeamsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,8 @@ public class MatchesService {
     public MatchesService(MatchesRepository matchesRepository, PlayerRepository playerRepository) {
         this.matchesRepository = matchesRepository;
     }
+    @Autowired
+    private TeamsRepository teamsRepository;
 
     public List<Matches> getMatches() {
         return matchesRepository.findAll();
@@ -31,6 +34,11 @@ public class MatchesService {
                 .filter(matches -> matches.getId().equals(id))
                 .collect(Collectors.toList());
     }
+    public List<Matches> getMatchesByVenue(String venue){
+        return matchesRepository.findAll().stream()
+                .filter(matches -> matches.getVenue().contains(venue))
+                .collect(Collectors.toList());
+    }
     public List<Matches> getRecentResults(LocalDateTime end_date,LocalDateTime start_date) {
         return matchesRepository.findAll().stream()
                 .filter(matches -> {
@@ -40,6 +48,13 @@ public class MatchesService {
                 })
                 .collect(Collectors.toList());
     }
+    public String getTeamNameById(Integer teamId) {
+        return teamsRepository.findNameById(teamId);
+    }
+    public List<Matches> getAllMatchesWithTeamNames() {
+        return matchesRepository.findAllMatchesWithTeams();
+    }
+
     @Transactional
     public void deleteMatch(Integer id) {
         matchesRepository.deleteById(id);

@@ -21,17 +21,24 @@ public class Matches {
     private LocalDateTime match_date;
     private String score;
     private String status;
+    private String venue;
+    private String away_team_name;
+    private String home_team_name;
+
 
     public Matches() {
     }
 
-    public Matches(Integer id, Integer home_team_id, Integer away_team_id, LocalDateTime match_date, String score, String status) {
+    public Matches(Integer id, Integer home_team_id, Integer away_team_id, LocalDateTime match_date, String score, String status, String venue,String away_team_name,String home_team_name) {
         this.id = id;
         this.home_team_id = home_team_id;
         this.away_team_id = away_team_id;
         this.match_date = match_date;
         this.score = score;
         this.status = status;
+        this.venue = venue;
+        this.home_team_name = home_team_name;
+        this.away_team_name = away_team_name;
     }
 
     public Integer getId() {
@@ -40,6 +47,22 @@ public class Matches {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAway_team_name() {
+        return away_team_name;
+    }
+
+    public void setAway_team_name(String away_team_name) {
+        this.away_team_name = away_team_name;
+    }
+
+    public String getHome_team_name() {
+        return home_team_name;
+    }
+
+    public void setHome_team_name(String home_team_name) {
+        this.home_team_name = home_team_name;
     }
 
     public Integer getHome_team_id() {
@@ -80,5 +103,13 @@ public class Matches {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
     }
 }

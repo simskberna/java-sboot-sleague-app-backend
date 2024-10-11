@@ -25,6 +25,7 @@ public class MatchesController {
     public List<Matches> getMatches(
             @RequestParam(required = false) Integer match_id,
             @RequestParam(required = false) Integer home_team_id,
+            @RequestParam(required = false) String venue,
             @RequestParam(required = false) Boolean recent
     ) {
         if(match_id != null) {
@@ -40,11 +41,14 @@ public class MatchesController {
         else if(home_team_id != null) {
             return matchesService.getMatchesByHomeTeamId(home_team_id);
         }
-        return matchesService.getMatches();
+        else if(venue != null) {
+            return matchesService.getMatchesByVenue(venue);
+        }
+        return matchesService.getAllMatchesWithTeamNames();
     }
     @DeleteMapping("/{matchId}")
     public ResponseEntity<String> deleteMatch(@PathVariable Integer matchId) {
         matchesService.deleteMatch(matchId);
-        return new ResponseEntity<>("M deleted successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("Match deleted successfully.", HttpStatus.OK);
     }
 }
