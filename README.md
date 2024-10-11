@@ -1,8 +1,8 @@
-# NWSL App Backend - Spring Boot API
+# Soccer League App Backend - Spring Boot API
 
 ## Overview
 
-Welcome to the NWSL App Backend! This is a RESTful API developed with **Spring Boot** and powered by **PostgreSQL** as the backend database. Our API supports essential CRUD operations—Create, Read, Update, and Delete—facilitating seamless interaction with player data.
+Welcome to the Soccer League App Backend! This is a RESTful API developed with **Spring Boot** and powered by **PostgreSQL** as the backend database. Our API supports essential CRUD operations—Create, Read, Update, and Delete—facilitating seamless interaction with player data.
 
 ### Features
 
