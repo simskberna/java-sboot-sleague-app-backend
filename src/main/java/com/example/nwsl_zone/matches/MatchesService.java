@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,14 +40,34 @@ public class MatchesService {
                 .filter(matches -> matches.getVenue().contains(venue))
                 .collect(Collectors.toList());
     }
-    public List<Matches> getRecentResults(LocalDateTime end_date,LocalDateTime start_date) {
-        return matchesRepository.findAll().stream()
+    public List<Matches> getRecentResults(LocalDateTime endDate, LocalDateTime startDate) {
+        LocalDateTime lastMonthStart = LocalDateTime.now().minusMonths(1);
+        LocalDateTime lastMonthEnd = LocalDateTime.now();
+
+        List<Matches> recentMatches = matchesRepository.findAll().stream()
                 .filter(matches -> {
                     LocalDateTime matchTime = matches.getMatch_date();
-                    return (matchTime.isEqual(start_date) || matchTime.isAfter(start_date)) &&
-                            (matchTime.isBefore(end_date) || matchTime.isEqual(end_date));
+                    String matchStatus = matches.getStatus();
+                    return (matchTime.isEqual(lastMonthStart) || matchTime.isAfter(lastMonthStart)) &&
+                            (matchTime.isBefore(lastMonthEnd) || matchTime.isEqual(lastMonthEnd)) &&
+                            matchStatus.equalsIgnoreCase("finished");
                 })
                 .collect(Collectors.toList());
+
+        if (recentMatches.isEmpty()) {
+            List<Matches> allFinishedMatches = matchesRepository.findAll().stream()
+                    .filter(matches -> matches.getStatus().equalsIgnoreCase("finished"))
+                    .collect(Collectors.toList());
+
+            if (!allFinishedMatches.isEmpty()) {
+                Collections.shuffle(allFinishedMatches);
+                return allFinishedMatches.stream()
+                        .limit(5)
+                        .collect(Collectors.toList());
+            }
+        }
+
+        return recentMatches;
     }
     public String getTeamNameById(Integer teamId) {
         return teamsRepository.findNameById(teamId);

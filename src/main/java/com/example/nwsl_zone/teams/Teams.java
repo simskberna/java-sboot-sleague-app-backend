@@ -18,6 +18,7 @@ public class Teams {
     private String coach;
     private Integer championships;
     private LocalDateTime founded;
+    private String image;
 
     public Teams() {
     }
@@ -26,12 +27,21 @@ public class Teams {
         this.id = id;
     }
 
-    public Teams(Integer id, String name, String coach, Integer championships, LocalDateTime founded) {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Teams(Integer id, String name, String coach, Integer championships, LocalDateTime founded, String image) {
         this.id = id;
         this.name = name;
         this.coach = coach;
         this.championships = championships;
         this.founded = founded;
+        this.image = image;
     }
 
     public Integer getId() {

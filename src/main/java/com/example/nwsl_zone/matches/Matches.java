@@ -24,12 +24,29 @@ public class Matches {
     private String venue;
     private String away_team_name;
     private String home_team_name;
-
+    private String away_team_img;
+    private String home_team_img;
 
     public Matches() {
     }
 
-    public Matches(Integer id, Integer home_team_id, Integer away_team_id, LocalDateTime match_date, String score, String status, String venue,String away_team_name,String home_team_name) {
+    public String getAway_team_img() {
+        return away_team_img;
+    }
+
+    public String getHome_team_img() {
+        return home_team_img;
+    }
+
+    public void setHome_team_img(String home_team_img) {
+        this.home_team_img = home_team_img;
+    }
+
+    public void setAway_team_img(String away_team_img) {
+        this.away_team_img = away_team_img;
+    }
+
+    public Matches(Integer id, Integer home_team_id, Integer away_team_id, LocalDateTime match_date, String score, String status, String venue, String away_team_name, String home_team_name, String away_team_img,String home_team_img) {
         this.id = id;
         this.home_team_id = home_team_id;
         this.away_team_id = away_team_id;
@@ -39,6 +56,8 @@ public class Matches {
         this.venue = venue;
         this.home_team_name = home_team_name;
         this.away_team_name = away_team_name;
+        this.away_team_img = away_team_img;
+        this.home_team_img = home_team_img;
     }
 
     public Integer getId() {
