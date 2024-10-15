@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "api/v1/matches")
 public class MatchesController {
 
@@ -26,23 +27,24 @@ public class MatchesController {
             @RequestParam(required = false) Integer match_id,
             @RequestParam(required = false) Integer home_team_id,
             @RequestParam(required = false) String venue,
-            @RequestParam(required = false) Boolean recent
+            @RequestParam(required = false) Boolean recent,
+            @RequestParam(required = false) Boolean upcoming
     ) {
         if(match_id != null) {
             return matchesService.getMatchesByMatchId(match_id);
         }
         else if (recent != null && recent) {
-            //returns last 5 days' data
-            LocalDateTime currentDate = LocalDateTime.now();
-            LocalDateTime fiveDaysAgo = currentDate.minusDays(5);
 
-            return matchesService.getRecentResults(currentDate,fiveDaysAgo);
+            return matchesService.getRecentResults();
         }
         else if(home_team_id != null) {
             return matchesService.getMatchesByHomeTeamId(home_team_id);
         }
         else if(venue != null) {
             return matchesService.getMatchesByVenue(venue);
+        }
+        else if (upcoming != null && upcoming) {
+            return matchesService.getUpcomingMatches();
         }
         return matchesService.getAllMatchesWithTeamNames();
     }

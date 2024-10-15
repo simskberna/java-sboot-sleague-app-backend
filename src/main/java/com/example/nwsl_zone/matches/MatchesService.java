@@ -23,28 +23,28 @@ public class MatchesService {
     private TeamsRepository teamsRepository;
 
     public List<Matches> getMatches() {
-        return matchesRepository.findAll();
+        return matchesRepository.findAllMatchesWithTeams();
     }
     public List<Matches> getMatchesByHomeTeamId(Integer home_team_id) {
-        return matchesRepository.findAll().stream()
+        return matchesRepository.findAllMatchesWithTeams().stream()
                 .filter(matches -> matches.getHome_team_id().equals(home_team_id))
                 .collect(Collectors.toList());
     }
     public List<Matches> getMatchesByMatchId(Integer id) {
-        return matchesRepository.findAll().stream()
+        return matchesRepository.findAllMatchesWithTeams().stream()
                 .filter(matches -> matches.getId().equals(id))
                 .collect(Collectors.toList());
     }
     public List<Matches> getMatchesByVenue(String venue){
-        return matchesRepository.findAll().stream()
+        return matchesRepository.findAllMatchesWithTeams().stream()
                 .filter(matches -> matches.getVenue().contains(venue))
                 .collect(Collectors.toList());
     }
-    public List<Matches> getRecentResults(LocalDateTime endDate, LocalDateTime startDate) {
+    public List<Matches> getRecentResults() {
         LocalDateTime lastMonthStart = LocalDateTime.now().minusMonths(1);
         LocalDateTime lastMonthEnd = LocalDateTime.now();
 
-        List<Matches> recentMatches = matchesRepository.findAll().stream()
+        List<Matches> recentMatches = matchesRepository.findAllMatchesWithTeams().stream()
                 .filter(matches -> {
                     LocalDateTime matchTime = matches.getMatch_date();
                     String matchStatus = matches.getStatus();
@@ -55,7 +55,7 @@ public class MatchesService {
                 .collect(Collectors.toList());
 
         if (recentMatches.isEmpty()) {
-            List<Matches> allFinishedMatches = matchesRepository.findAll().stream()
+            List<Matches> allFinishedMatches = matchesRepository.findAllMatchesWithTeams().stream()
                     .filter(matches -> matches.getStatus().equalsIgnoreCase("finished"))
                     .collect(Collectors.toList());
 
@@ -71,6 +71,11 @@ public class MatchesService {
     }
     public String getTeamNameById(Integer teamId) {
         return teamsRepository.findNameById(teamId);
+    }
+    public List<Matches> getUpcomingMatches(){
+        return matchesRepository.findAllMatchesWithTeams().stream()
+                .filter(matches -> matches.getStatus().contains("upcoming"))
+                .collect(Collectors.toList());
     }
     public List<Matches> getAllMatchesWithTeamNames() {
         return matchesRepository.findAllMatchesWithTeams();
