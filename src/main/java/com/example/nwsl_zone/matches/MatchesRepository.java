@@ -1,5 +1,7 @@
 package com.example.nwsl_zone.matches;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,8 +17,7 @@ public interface MatchesRepository extends JpaRepository<Matches, Integer> {
             "FROM Matches m " +
             "JOIN Teams ta ON m.away_team_id = ta.id " +
             "JOIN Teams th ON m.home_team_id = th.id")
-    List<Matches> findAllMatchesWithTeams();
-
+    Page<Matches> findAllMatchesWithTeams(Pageable pageable);
 
 
 }
