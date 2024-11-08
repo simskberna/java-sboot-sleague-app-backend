@@ -21,7 +21,7 @@ Welcome to the Soccer League App Backend! This is a RESTful API developed with *
 1. **Clone the Repository**  
    Clone this repository to your local machine using:
    ```bash
-   git clone https://github.com/your-repo/nwsl-app-backend.git
+   git clone https://github.com/simskberna/java-sboot-sleague-app-backend
    ```
 
 2. **Configure PostgreSQL**  
